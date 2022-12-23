@@ -1,7 +1,7 @@
 # Boilerplate-Vite-React
 
 
-Bibliotecas Instaladas: <br />
+Main libraries used: <br />
 &#160;&#160;&#160;-> <strong> React Router Dom </strong> <br />
 &#160;&#160;&#160;-> <strong> Commitizen </strong> <br />
 &#160;&#160;&#160;-> <strong> Sass </strong> <br />
