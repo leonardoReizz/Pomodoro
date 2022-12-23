@@ -29,4 +29,4 @@ After installation just run the following command:
 yarn dev
 ```
 
-The Project will boot into developmente enviroment at http://localhost:5173
+The Project will boot into development enviroment at http://localhost:5173
