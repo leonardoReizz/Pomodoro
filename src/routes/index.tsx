@@ -1,11 +1,14 @@
-import { Route, Routes } from "react-router-dom";
-import App from "../App";
-import { Home } from "../pages/Home";
+import { Route, Routes } from 'react-router-dom';
+import App from '../App';
+import { Home } from '@pages/Home';
+import { LayoutWithNavbar } from './LayoutWithNavbar';
 
 export function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route element={<LayoutWithNavbar />}>
+        <Route path="/" element={<Home />} />
+      </Route>
     </Routes>
   );
 }

@@ -1,6 +1,6 @@
+import { settingsReducer } from '@reducers/settings/reducer';
 import { createContext, ReactNode, useReducer } from 'react';
-import { changeTimerPromodoroAction } from '../../reducers/settings/actions';
-import { settingsReducer } from '../../reducers/settings/reducer';
+import { changeTimerPromodoroAction } from '@reducers/settings/actions';
 
 interface SettingsContextData {
   timePomodoro: number;

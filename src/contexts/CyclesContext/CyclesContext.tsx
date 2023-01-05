@@ -1,8 +1,8 @@
-import { differenceInSeconds, startOfYesterday } from 'date-fns';
+import { differenceInSeconds } from 'date-fns';
 import { createContext, ReactNode, useEffect, useReducer, useState } from 'react';
-import { AppState } from '../pages/Home';
-import { addNewCycleAction, markCurrentCycleAsFinishedAction } from '../reducers/cycles/actions';
-import { Cycle, cyclesReducer } from '../reducers/cycles/reducer';
+import { AppState } from '@pages/Home';
+import { addNewCycleAction, markCurrentCycleAsFinishedAction } from '@reducers/cycles/actions';
+import { Cycle, cyclesReducer } from '@reducers/cycles/reducer';
 
 interface CreateCycleData {
   task: string;

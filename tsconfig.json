@@ -18,8 +18,12 @@
     "paths": {
       "@components/*": ["./src/components/*"],
       "@services/*": ["./src/components/*"],
+      "@reducers/*": ["./src/reducers/*"],
       "@routes/*": ["./src/routes/*"],
-      "@assets/*": ["./src/routes/*"]
+      "@assets/*": ["./src/routes/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@contexts/*": ["./src/contexts/*"]
     }
   },
   "include": ["src"],
