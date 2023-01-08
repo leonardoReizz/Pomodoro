@@ -1,7 +1,13 @@
 import { differenceInSeconds } from 'date-fns';
 import { createContext, ReactNode, useEffect, useReducer, useState } from 'react';
 import { AppState } from '@pages/Home';
-import { addNewCycleAction, markCurrentCycleAsFinishedAction } from '@reducers/cycles/actions';
+import {
+  addNewCycleAction,
+  changeTotalMinutesLongBreakAction,
+  changeTotalMinutesPomodoroAction,
+  changeTotalMinutesShortBreakAction,
+  markCurrentCycleAsFinishedAction
+} from '@reducers/cycles/actions';
 import { Cycle, cyclesReducer } from '@reducers/cycles/reducer';
 
 interface CreateCycleData {
@@ -12,9 +18,15 @@ interface CreateCycleData {
 
 interface CyclesContextType {
   cycles: Cycle[];
+  totalMinutesPomodoro: number;
+  totalMinutesShortBreak: number;
+  totalMinutesLongBreak: number;
   activeCycle: Cycle | undefined;
   activeCycleId: string | null;
   ammountSecondsPassed: number;
+  changeTotalMinutesPomodoro: (minutes: number) => void;
+  changeTotalMinutesShortBreak: (minutes: number) => void;
+  changeTotalMinutesLongBreak: (minutes: number) => void;
   interruptCurrentCycle: () => void;
   markCurrentCycleAsFinished: () => void;
   setSecondsPassed: (seconds: number) => void;
@@ -32,6 +44,9 @@ export function CyclesContextProvider({ children }: CyclesContextProviderProps) 
     cyclesReducer,
     {
       cycles: [],
+      totalMinutesPomodoro: 5,
+      totalMinutesShortBreak: 5,
+      totalMinutesLongBreak: 5,
       activeCycleId: null
     },
     () => {
@@ -41,13 +56,22 @@ export function CyclesContextProvider({ children }: CyclesContextProviderProps) 
       } else {
         return {
           cycles: [],
+          totalMinutesPomodoro: 5,
+          totalMinutesShortBreak: 5,
+          totalMinutesLongBreak: 5,
           activeCycleId: null
         };
       }
     }
   );
 
-  const { cycles, activeCycleId } = cyclesState;
+  const {
+    cycles,
+    activeCycleId,
+    totalMinutesPomodoro,
+    totalMinutesShortBreak,
+    totalMinutesLongBreak
+  } = cyclesState;
   const activeCycle = cycles.find((cycle: Cycle) => cycle.id === activeCycleId);
 
   const [ammountSecondsPassed, setAmountSecondsPassed] = useState<number>(() => {
@@ -70,6 +94,18 @@ export function CyclesContextProvider({ children }: CyclesContextProviderProps) 
 
   function markCurrentCycleAsFinished() {
     dispatch(markCurrentCycleAsFinishedAction());
+  }
+
+  function changeTotalMinutesPomodoro(minutes: number) {
+    dispatch(changeTotalMinutesPomodoroAction(minutes));
+  }
+
+  function changeTotalMinutesShortBreak(minutes: number) {
+    dispatch(changeTotalMinutesShortBreakAction(minutes));
+  }
+
+  function changeTotalMinutesLongBreak(minutes: number) {
+    dispatch(changeTotalMinutesLongBreakAction(minutes));
   }
 
   function createNewCycle(data: CreateCycleData) {
@@ -103,6 +139,12 @@ export function CyclesContextProvider({ children }: CyclesContextProviderProps) 
         activeCycleId,
         markCurrentCycleAsFinished,
         ammountSecondsPassed,
+        changeTotalMinutesPomodoro,
+        totalMinutesPomodoro,
+        totalMinutesShortBreak,
+        totalMinutesLongBreak,
+        changeTotalMinutesShortBreak,
+        changeTotalMinutesLongBreak,
         setSecondsPassed,
         createNewCycle,
         interruptCurrentCycle
