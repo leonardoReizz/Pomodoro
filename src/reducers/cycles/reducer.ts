@@ -16,10 +16,25 @@ export interface Cycle {
 interface CyclesState {
   cycles: Cycle[];
   activeCycleId: string | null;
+  totalMinutesPomodoro: number;
+  totalMinutesShortBreak: number;
+  totalMinutesLongBreak: number;
 }
 
 export function cyclesReducer(state: CyclesState, action: any) {
   switch (action.type) {
+    case ActionTypes.CHANGE_TOTAL_MINUTES_POMODORO:
+      return produce(state, (draft) => {
+        draft.totalMinutesPomodoro = action.payload.minutes;
+      });
+    case ActionTypes.CHANGE_TOTAL_MINUTES_POMODORO_SHORT_BREAK:
+      return produce(state, (draft) => {
+        draft.totalMinutesShortBreak = action.payload.minutes;
+      });
+    case ActionTypes.CHANGE_TOTAL_MINUTES_POMODORO_LONG_BREAK:
+      return produce(state, (draft) => {
+        draft.totalMinutesLongBreak = action.payload.minutes;
+      });
     case ActionTypes.ADD_NEW_CYCLE:
       return produce(state, (draft) => {
         draft.cycles.push(action.payload.newCycle);
