@@ -20,14 +20,26 @@ export interface ITask {
 export function Home() {
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [nameTask, setNameTask] = useState<string>('');
-  const [minutesAmount, setMinutesAmount] = useState<number>(5);
   const [appState, setAppState] = useState<AppState>('pomodoro');
-  const { createNewCycle, activeCycle, interruptCurrentCycle } = useContext(CyclesContext);
+  const {
+    createNewCycle,
+    activeCycle,
+    interruptCurrentCycle,
+    totalMinutesLongBreak,
+    totalMinutesPomodoro,
+    totalMinutesShortBreak
+  } = useContext(CyclesContext);
 
   const changeAppState = useCallback((newState: AppState) => {
     setAppState(newState);
   }, []);
 
+  const minutesAmount =
+    appState === 'pomodoro'
+      ? totalMinutesPomodoro
+      : appState === 'shortBreak'
+      ? totalMinutesShortBreak
+      : totalMinutesLongBreak;
   function handleStartCycle() {
     createNewCycle({ task: '', minutesAmount, type: appState });
   }

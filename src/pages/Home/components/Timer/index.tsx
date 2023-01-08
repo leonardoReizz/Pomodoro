@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { differenceInSeconds } from 'date-fns';
 
 import { CyclesContext } from '@contexts/CyclesContext/CyclesContext';
@@ -13,18 +13,27 @@ export function Timer({ appState }: TimerProps) {
   const {
     activeCycle,
     activeCycleId,
+    totalMinutesPomodoro,
+    totalMinutesShortBreak,
+    totalMinutesLongBreak,
     markCurrentCycleAsFinished,
     ammountSecondsPassed,
     setSecondsPassed,
     interruptCurrentCycle
   } = useContext(CyclesContext);
 
-  const totalSeconds = activeCycle ? activeCycle.minutesAmount * 60 : 0;
-  const currentSeconds = activeCycle ? totalSeconds - ammountSecondsPassed : 0;
-  const minutesAmount = Math.floor(currentSeconds / 60);
+  const totalSeconds = activeCycle
+    ? activeCycle.minutesAmount * 60
+    : appState === 'pomodoro'
+    ? totalMinutesPomodoro * 60
+    : appState === 'shortBreak'
+    ? totalMinutesShortBreak * 60
+    : totalMinutesLongBreak * 60;
+  const currentSeconds = activeCycle ? totalSeconds - ammountSecondsPassed : totalSeconds;
+  const minutesAmountCycle = Math.floor(currentSeconds / 60);
   const secondsAmount = currentSeconds % 60;
 
-  const minutes = String(minutesAmount).padStart(2, '0');
+  const minutes = String(minutesAmountCycle).padStart(2, '0');
   const seconds = String(secondsAmount).padStart(2, '0');
 
   useEffect(() => {
