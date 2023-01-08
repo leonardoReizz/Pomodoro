@@ -6,6 +6,8 @@ import { CyclesContextProvider } from '@contexts/CyclesContext/CyclesContext';
 import { AppRoutes } from './routes';
 import { GlobalStyle } from './styles/global';
 import { defaultTheme } from './styles/themes/default';
+import 'react-toastify/dist/ReactToastify.css';
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ThemeProvider theme={defaultTheme}>
