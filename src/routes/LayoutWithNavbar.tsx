@@ -6,7 +6,9 @@ export function LayoutWithNavbar() {
   return (
     <AppContainer>
       <Navbar />
-      <Outlet />
+      <div className="page">
+        <Outlet />
+      </div>
     </AppContainer>
   );
 }
