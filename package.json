@@ -24,6 +24,7 @@
     "react-toastify": "^9.1.1",
     "sass": "^1.57.1",
     "styled-components": "^5.3.6",
+    "uuid": "^9.0.0",
     "vite-tsconfig-paths": "^4.0.3",
     "yup": "^0.32.11"
   },
@@ -32,6 +33,7 @@
     "@types/react-dom": "^18.0.9",
     "@types/react-modal": "^3.13.1",
     "@types/styled-components": "^5.1.26",
+    "@types/uuid": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^5.47.0",
     "@typescript-eslint/parser": "^5.47.0",
     "@vitejs/plugin-react": "^3.0.0",
