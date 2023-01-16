@@ -5,12 +5,11 @@ import { ActionTypes } from './actions';
 
 export interface Cycle {
   id: string;
-  task: string;
   minutesAmount: number;
-  startDate: Date;
+  startDate: string;
   type: AppState;
-  interruptedDate?: Date;
-  finishedDate?: Date;
+  interruptedDate?: string;
+  finishedDate?: string;
 }
 
 interface CyclesState {
@@ -49,7 +48,8 @@ export function cyclesReducer(state: CyclesState, action: any) {
         return state;
       }
       return produce(state, (draft) => {
-        draft.cycles[currentCycleIndex].interruptedDate = new Date();
+        //data alterada
+        draft.cycles[currentCycleIndex].interruptedDate = action.payload.date;
         draft.activeCycleId = null;
       });
     }
@@ -62,7 +62,8 @@ export function cyclesReducer(state: CyclesState, action: any) {
         return state;
       }
       return produce(state, (draft) => {
-        draft.cycles[currentCycleIndex].finishedDate = new Date();
+        //data alterada
+        draft.cycles[currentCycleIndex].finishedDate = action.payload.date;
         draft.activeCycleId = null;
       });
     }

@@ -18,15 +18,21 @@ export function addNewCycleAction(newCycle: Cycle) {
   };
 }
 
-export function markCurrentCycleAsFinishedAction() {
+export function markCurrentCycleAsFinishedAction(date: Date) {
   return {
-    type: ActionTypes.MARK_CURRENT_CYCLE_AS_FINISHED
+    type: ActionTypes.MARK_CURRENT_CYCLE_AS_FINISHED,
+    payload: {
+      date
+    }
   };
 }
 
-export function interruptCurrentCycleAction() {
+export function interruptCurrentCycleAction(date: Date) {
   return {
-    type: ActionTypes.INTERRUPT_CURRENT_CYCLE
+    type: ActionTypes.INTERRUPT_CURRENT_CYCLE,
+    payload: {
+      date
+    }
   };
 }
 

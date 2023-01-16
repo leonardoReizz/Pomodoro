@@ -1,17 +1,19 @@
 import { differenceInSeconds } from 'date-fns';
 import { createContext, ReactNode, useEffect, useReducer, useState } from 'react';
+import { v4 } from 'uuid';
+
 import { AppState } from '@pages/Home';
 import {
   addNewCycleAction,
   changeTotalMinutesLongBreakAction,
   changeTotalMinutesPomodoroAction,
   changeTotalMinutesShortBreakAction,
+  interruptCurrentCycleAction,
   markCurrentCycleAsFinishedAction
 } from '@reducers/cycles/actions';
 import { Cycle, cyclesReducer } from '@reducers/cycles/reducer';
 
-interface CreateCycleData {
-  task: string;
+export interface CreateCycleData {
   minutesAmount: number;
   type: AppState;
 }
@@ -27,10 +29,10 @@ interface CyclesContextType {
   changeTotalMinutesPomodoro: (minutes: number) => void;
   changeTotalMinutesShortBreak: (minutes: number) => void;
   changeTotalMinutesLongBreak: (minutes: number) => void;
-  interruptCurrentCycle: () => void;
-  markCurrentCycleAsFinished: () => void;
+  interruptCurrentCycle: (date: Date) => void;
+  markCurrentCycleAsFinished: (date: Date) => void;
   setSecondsPassed: (seconds: number) => void;
-  createNewCycle: (data: CreateCycleData) => void;
+  createNewCycle: (data: CreateCycleData) => Cycle;
 }
 
 export const CyclesContext = createContext({} as CyclesContextType);
@@ -92,8 +94,8 @@ export function CyclesContextProvider({ children }: CyclesContextProviderProps) 
     setAmountSecondsPassed(seconds);
   }
 
-  function markCurrentCycleAsFinished() {
-    dispatch(markCurrentCycleAsFinishedAction());
+  function markCurrentCycleAsFinished(date: Date) {
+    dispatch(markCurrentCycleAsFinishedAction(date));
   }
 
   function changeTotalMinutesPomodoro(minutes: number) {
@@ -109,10 +111,10 @@ export function CyclesContextProvider({ children }: CyclesContextProviderProps) 
   }
 
   function createNewCycle(data: CreateCycleData) {
-    const id = String(new Date().getTime());
+    const id = v4();
+
     const newCycle: Cycle = {
       id,
-      task: data.task,
       minutesAmount: data.minutesAmount,
       type: data.type,
       startDate: new Date()
@@ -120,15 +122,12 @@ export function CyclesContextProvider({ children }: CyclesContextProviderProps) 
 
     dispatch(addNewCycleAction(newCycle));
     setAmountSecondsPassed(0);
+
+    return newCycle;
   }
 
-  function interruptCurrentCycle() {
-    dispatch({
-      type: 'INTERRUPT_CURRENT_CYCLE',
-      payload: {
-        activeCycleId
-      }
-    });
+  function interruptCurrentCycle(date: Date) {
+    dispatch(interruptCurrentCycleAction(date));
   }
 
   return (
