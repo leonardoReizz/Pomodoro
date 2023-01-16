@@ -7,6 +7,7 @@ import { Timer } from './components/Timer';
 import { HomeContainer, StartButton, TaskContainer, TimerContainer } from './styles';
 import { TaskList } from './components/Task/styles';
 import { current } from 'immer';
+import { useCycles } from '../../hooks/useCycles/useCycles';
 
 export type AppState = 'pomodoro' | 'shortBreak' | 'longBreak';
 
@@ -28,7 +29,7 @@ export function Home() {
     totalMinutesLongBreak,
     totalMinutesPomodoro,
     totalMinutesShortBreak
-  } = useContext(CyclesContext);
+  } = useCycles();
 
   const changeAppState = useCallback((newState: AppState) => {
     setAppState(newState);
@@ -40,6 +41,7 @@ export function Home() {
       : appState === 'shortBreak'
       ? totalMinutesShortBreak
       : totalMinutesLongBreak;
+
   function handleStartCycle() {
     createNewCycle({ task: '', minutesAmount, type: appState });
   }
