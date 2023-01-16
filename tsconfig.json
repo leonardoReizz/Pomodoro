@@ -17,7 +17,7 @@
     "jsx": "react-jsx",
     "paths": {
       "@components/*": ["./src/components/*"],
-      "@services/*": ["./src/components/*"],
+      "@services/*": ["./src/services/*"],
       "@reducers/*": ["./src/reducers/*"],
       "@routes/*": ["./src/routes/*"],
       "@assets/*": ["./src/routes/*"],
