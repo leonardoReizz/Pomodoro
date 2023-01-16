@@ -1,18 +1,25 @@
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import { login } from '../../services/http/user';
-import { InputContainer, LoginContainer } from './style';
+import { toastOptions } from '../../utils/toastOptions';
+import { CreateAccountButton, FormContainer, InputContainer, LoginContainer } from './style';
 
 export function Login() {
   const navigate = useNavigate();
-  async function handleSubmit(user: typeof initialValues) {
-    const loginUser = await login(user);
+  async function handleSubmit(values: typeof initialValues) {
+    const loginUser = await login(values);
 
     if (!loginUser.id) {
-      return console.log('invalid');
+      return toast.error('Invalid email or password', { ...toastOptions, toastId: 'errorLogin' });
     }
-    return navigate('/home');
+    toast.dismiss('errorLogin');
+    return navigate('/');
+  }
+
+  function handleRegister() {
+    navigate('/register');
   }
 
   const initialValues = {
@@ -32,31 +39,37 @@ export function Login() {
 
   return (
     <LoginContainer>
-      <div className="title">
-        <h3>LOGIN</h3>
-      </div>
-      <form onSubmit={formikProps.handleSubmit}>
-        <InputContainer>
-          <span>Email</span>
-          <input
-            type="text"
-            value={formikProps.values.email}
-            name="email"
-            onChange={formikProps.handleChange}
-          />
-        </InputContainer>
-        <InputContainer>
-          <span>Password</span>
-          <input
-            type="password"
-            value={formikProps.values.password}
-            name="password"
-            onChange={formikProps.handleChange}
-          />
-        </InputContainer>
+      <FormContainer>
+        <div className="title">
+          <h3>LOGIN</h3>
+        </div>
+        <form onSubmit={formikProps.handleSubmit}>
+          <InputContainer>
+            <span>Email</span>
+            <input
+              type="text"
+              value={formikProps.values.email}
+              name="email"
+              onChange={formikProps.handleChange}
+            />
+          </InputContainer>
+          <InputContainer>
+            <span>Password</span>
+            <input
+              type="password"
+              value={formikProps.values.password}
+              name="password"
+              onChange={formikProps.handleChange}
+            />
+          </InputContainer>
 
-        <button type="submit">Enter</button>
-      </form>
+          <button type="submit">Enter</button>
+        </form>
+
+        <CreateAccountButton onClick={handleRegister}>
+          Don't have an account yet? Register
+        </CreateAccountButton>
+      </FormContainer>
     </LoginContainer>
   );
 }
