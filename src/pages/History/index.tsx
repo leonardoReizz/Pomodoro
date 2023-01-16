@@ -1,11 +1,32 @@
-import { CyclesContext } from '@contexts/CyclesContext/CyclesContext';
-import { formatDistanceToNow } from 'date-fns';
-import { useContext } from 'react';
-import enUs from 'date-fns/locale/en-US';
+import { formatRelative, subDays } from 'date-fns';
+import { useEffect, useState } from 'react';
 import { HistoryContainer, HistoryTable, Status } from './style';
+import apiHistory from '@services/http/history/index';
+import { useUser } from '../../hooks/useUser/useUser';
+import { Cycle } from '@reducers/cycles/reducer';
+import { parseISO } from 'date-fns/esm';
 
 export function History() {
-  const { cycles } = useContext(CyclesContext);
+  const [cycles, setCycles] = useState<Cycle[]>([]);
+  const { user } = useUser();
+
+  useEffect(() => {
+    async function list() {
+      if (user?.id) {
+        const history = await apiHistory.getHistory(user.id);
+        setCycles(history);
+      }
+    }
+
+    list();
+  }, []);
+
+  function formatDate(date: string) {
+    const format = formatRelative(subDays(parseISO(date), 3), new Date());
+    console.log(format);
+
+    return format;
+  }
 
   return (
     <HistoryContainer>
@@ -13,9 +34,10 @@ export function History() {
         <table>
           <thead>
             <tr>
-              <th>Task</th>
               <th>Duration</th>
+              <th>Type</th>
               <th>Started</th>
+              <th>Finish</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -23,55 +45,17 @@ export function History() {
             {cycles.map((cycle) => {
               return (
                 <tr key={cycle.id}>
-                  <td>{cycle.task}</td>
                   <td>{cycle.minutesAmount} minutes</td>
+                  <td>{cycle.type}</td>
+                  <td>{formatDate(cycle.startDate)}</td>
                   <td>
-                    {formatDistanceToNow(new Date(cycle.startDate), {
-                      addSuffix: true,
-                      locale: enUs
-                    })}
-                  </td>
-                  <td>
-                    {cycle.finishedDate && <Status statusColor="green">Concluded</Status>}
-                    {cycle.interruptedDate && <Status statusColor="red">Interrupted</Status>}
-                    {!cycle.finishedDate && !cycle.interruptedDate && (
-                      <Status statusColor="yellow">In progress</Status>
-                    )}
-                  </td>
-                </tr>
-              );
-            })}
-            {cycles.map((cycle) => {
-              return (
-                <tr key={cycle.id}>
-                  <td>{cycle.task}</td>
-                  <td>{cycle.minutesAmount} minutes</td>
-                  <td>
-                    {formatDistanceToNow(new Date(cycle.startDate), {
-                      addSuffix: true,
-                      locale: enUs
-                    })}
-                  </td>
-                  <td>
-                    {cycle.finishedDate && <Status statusColor="green">Concluded</Status>}
-                    {cycle.interruptedDate && <Status statusColor="red">Interrupted</Status>}
-                    {!cycle.finishedDate && !cycle.interruptedDate && (
-                      <Status statusColor="yellow">In progress</Status>
-                    )}
-                  </td>
-                </tr>
-              );
-            })}
-            {cycles.map((cycle) => {
-              return (
-                <tr key={cycle.id}>
-                  <td>{cycle.task}</td>
-                  <td>{cycle.minutesAmount} minutes</td>
-                  <td>
-                    {formatDistanceToNow(new Date(cycle.startDate), {
-                      addSuffix: true,
-                      locale: enUs
-                    })}
+                    {cycle?.finishedDate !== undefined &&
+                      cycle?.finishedDate !== '' &&
+                      formatDate(cycle.finishedDate)}
+
+                    {cycle?.interruptedDate !== undefined &&
+                      cycle?.interruptedDate !== '' &&
+                      formatDate(cycle.interruptedDate)}
                   </td>
                   <td>
                     {cycle.finishedDate && <Status statusColor="green">Concluded</Status>}
