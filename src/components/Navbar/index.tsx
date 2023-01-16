@@ -6,9 +6,13 @@ import { useState } from 'react';
 import { SettingsModal } from './components/SettingsModal';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../../hooks/useUser/useUser';
+
 export function Navbar() {
+  const { changeUser, user } = useUser();
   const [isOpenSettingsModal, setIsOpenSettingsModal] = useState<boolean>(false);
   const navigate = useNavigate();
+
   function handleOpenSettingsModal() {
     setIsOpenSettingsModal(true);
   }
@@ -16,9 +20,20 @@ export function Navbar() {
   function handleHistory() {
     navigate('/history');
   }
+
   function handleLogin() {
     navigate('/login');
   }
+
+  function handleHome() {
+    navigate('/');
+  }
+
+  function handleLeave() {
+    changeUser(undefined);
+    navigate('/');
+  }
+
   const closeSettingsModal = useCallback(() => {
     setIsOpenSettingsModal(false);
   }, []);
@@ -27,7 +42,7 @@ export function Navbar() {
     <>
       <SettingsModal isOpen={isOpenSettingsModal} onRequestClose={closeSettingsModal} />
       <NavbarContainer>
-        <Logo>
+        <Logo onClick={handleHome}>
           <h3>POMODORO</h3>
         </Logo>
         <Nav>
@@ -42,11 +57,20 @@ export function Navbar() {
                 <BiHistory /> History
               </button>
             </li>
-            <li>
-              <button type="button" onClick={handleLogin}>
-                <AiOutlineUser /> Login
-              </button>
-            </li>
+            {user === undefined && (
+              <li>
+                <button type="button" onClick={handleLogin}>
+                  <AiOutlineUser /> Login
+                </button>
+              </li>
+            )}
+            {user !== undefined && (
+              <li>
+                <button type="button" onClick={handleLeave}>
+                  <AiOutlineUser /> Sair
+                </button>
+              </li>
+            )}
           </ul>
         </Nav>
       </NavbarContainer>
