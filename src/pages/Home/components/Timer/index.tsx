@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { differenceInSeconds } from 'date-fns';
 
-import { CyclesContext } from '@contexts/CyclesContext/CyclesContext';
 import { TimerContainer } from './styles';
 import { AppState } from '../..';
+import { useCycles } from '../../../../hooks/useCycles/useCycles';
 
 interface TimerProps {
   appState: AppState;
@@ -18,9 +18,8 @@ export function Timer({ appState }: TimerProps) {
     totalMinutesLongBreak,
     markCurrentCycleAsFinished,
     ammountSecondsPassed,
-    setSecondsPassed,
-    interruptCurrentCycle
-  } = useContext(CyclesContext);
+    setSecondsPassed
+  } = useCycles();
 
   const totalSeconds = activeCycle
     ? activeCycle.minutesAmount * 60
@@ -41,10 +40,6 @@ export function Timer({ appState }: TimerProps) {
       document.title = `Ignite Timer - ${minutes}:${seconds}`;
     }
   }, [minutes, seconds, activeCycle]);
-
-  useEffect(() => {
-    interruptCurrentCycle();
-  }, [appState]);
 
   useEffect(() => {
     let interval: any;
