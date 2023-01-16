@@ -20,11 +20,12 @@ export const TimerContainer = styled.div`
   flex-direction: column;
 
   background-color: ${(props) => props.theme['gray-700']};
+  color: ${(props) => props.theme['white']};
+
   width: 100%;
   height: 350px;
   border-radius: 8px;
   padding: 1rem;
-  color: ${(props) => props.theme['white']};
 `;
 
 export const StartButton = styled.button`

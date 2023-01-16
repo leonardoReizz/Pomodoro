@@ -6,36 +6,33 @@ export const LoginContainer = styled.div`
   align-items: center;
   flex-direction: column;
 
-  height: 600px;
-  width: 400px;
-
-  border-radius: 8px;
-  padding: 1rem;
-
-  background-color: ${(props) => props.theme['gray-800']};
+  height: 100vh;
+  width: 100%;
   .title {
+    position: absolute;
+    top: 80px;
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
   }
+
   form {
     width: 100%;
-    flex: 2;
 
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     flex-direction: column;
     gap: 2rem;
 
     button {
       background-color: ${(props) => props.theme['purple-100']};
-      width: 200px;
-      height: 40px;
+      width: 230px;
+      height: 45px;
       border-radius: 8px;
 
-      margin-top: 2rem;
+      font-weight: bold;
 
       transition: background-color 0.2s ease;
       &:hover {
@@ -43,6 +40,22 @@ export const LoginContainer = styled.div`
       }
     }
   }
+`;
+
+export const FormContainer = styled.div`
+  width: 400px;
+  height: 550px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  border-radius: 8px;
+  padding: 1rem 3rem;
+  position: relative;
+
+  background-color: ${(props) => props.theme['gray-800']};
 `;
 
 export const InputContainer = styled.div`
@@ -61,5 +74,16 @@ export const InputContainer = styled.div`
     border: 0;
     height: 30px;
     border-bottom: 2px solid ${(props) => props.theme['gray-600']};
+  }
+`;
+
+export const CreateAccountButton = styled.button`
+  position: absolute;
+  bottom: 50px;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+
+  &:hover {
+    text-decoration: underline;
   }
 `;

@@ -19,6 +19,7 @@ export const Header = styled.div`
   justify-content: space-between;
   padding: 0 2rem;
   position: relative;
+
   &::before {
     content: '';
     position: absolute;
@@ -27,6 +28,7 @@ export const Header = styled.div`
     height: 1px;
     background-color: ${(props) => props.theme['gray-600']};
   }
+
   h3 {
     color: ${(props) => props.theme['gray-600']};
   }
@@ -74,6 +76,7 @@ export const ButtonClose = styled.button`
   bottom: 2rem;
   border-radius: 8px;
   transition: background-color 0.2s ease;
+
   &:hover {
     background-color: ${(props) => props.theme['red-700']};
   }
