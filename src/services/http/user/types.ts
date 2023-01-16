@@ -4,9 +4,9 @@ export interface ILoginRequest {
 }
 
 export interface IUser {
-  id: number;
-  email: string;
-  password: string;
+  id: string;
   firstName: string;
   lastName: string;
+  email: string;
+  access_token: string;
 }
