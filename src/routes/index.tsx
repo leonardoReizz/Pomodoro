@@ -9,11 +9,10 @@ import { Login } from '@pages/Login';
 export function AppRoutes() {
   return (
     <Routes>
+      <Route path="/login" element={<Login />} />
       <Route element={<LayoutWithNavbar />}>
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/history" element={<History />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Login />} />
       </Route>
     </Routes>
   );
