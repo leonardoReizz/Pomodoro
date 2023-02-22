@@ -10,3 +10,9 @@ export interface IUser {
   email: string;
   access_token: string;
 }
+
+export interface IRegisterData {
+  firstName: string;
+  lastName: string;
+  email: string;
+}
