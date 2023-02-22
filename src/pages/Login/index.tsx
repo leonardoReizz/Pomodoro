@@ -2,14 +2,17 @@ import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
-import { login } from '../../services/http/user';
+import userApi from '../../services/http/user';
 import { toastOptions } from '../../utils/toastOptions';
 import { CreateAccountButton, FormContainer, InputContainer, LoginContainer } from './style';
 
 export function Login() {
   const navigate = useNavigate();
   async function handleSubmit(values: typeof initialValues) {
-    const loginUser = await login(values);
+    toast.loading('Waiting...', { ...toastOptions, toastId: 'login' });
+    const loginUser = await userApi.login(values);
+
+    toast.dismiss('login');
 
     if (!loginUser.id) {
       return toast.error('Invalid email or password', { ...toastOptions, toastId: 'errorLogin' });
