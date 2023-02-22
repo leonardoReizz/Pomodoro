@@ -1,7 +1,8 @@
 import { api } from '../../api';
+import { IDefaultApiResult } from '../types';
 import * as types from './types';
 
-export async function login(user: types.ILoginRequest): Promise<types.IUser> {
+async function login(user: types.ILoginRequest): Promise<types.IUser> {
   const login: types.IUser = await api
     .post('/auth/login', {
       email: user.email,
@@ -18,3 +19,20 @@ export async function login(user: types.ILoginRequest): Promise<types.IUser> {
 
   return login;
 }
+
+async function register(user: types.IRegisterData): Promise<IDefaultApiResult> {
+  return await api
+    .post('/users', {
+      ...user
+    })
+    .then((result) => {
+      console.log(result);
+      return { status: result.data.status };
+    })
+    .catch((error) => {
+      console.log(error);
+      return { status: error?.response?.status, message: error?.response?.data?.message };
+    });
+}
+
+export default { register, login };
