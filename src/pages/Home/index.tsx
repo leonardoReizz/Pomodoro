@@ -43,7 +43,7 @@ export function Home() {
       : totalMinutesLongBreak;
 
   function handleStartCycle() {
-    createNewCycle({ task: '', minutesAmount, type: appState });
+    createNewCycle({ minutesAmount, type: appState });
   }
 
   function handleAddTask() {
