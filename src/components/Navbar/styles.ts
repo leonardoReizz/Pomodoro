@@ -10,7 +10,9 @@ export const NavbarContainer = styled.div`
   max-width: 1000px;
 `;
 
-export const Logo = styled.div``;
+export const Logo = styled.button`
+  font-size: 1.5rem;
+`;
 
 export const Nav = styled.div`
   ul {

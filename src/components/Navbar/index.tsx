@@ -42,9 +42,7 @@ export function Navbar() {
     <>
       <SettingsModal isOpen={isOpenSettingsModal} onRequestClose={closeSettingsModal} />
       <NavbarContainer>
-        <Logo onClick={handleHome}>
-          <h3>POMODORO</h3>
-        </Logo>
+        <Logo onClick={handleHome}>Pomodoro</Logo>
         <Nav>
           <ul>
             <li>
